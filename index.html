@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="StudySpark is a student productivity dashboard demo for managing study tasks, focus sessions and notes.">
+  <title>StudySpark | Your Study Space</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="background-glow glow-one"></div>
+  <div class="background-glow glow-two"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar glass">
+      <a href="#dashboard" class="brand">
+        <span class="brand-icon">✦</span>
+        <span>Study<span class="accent">Spark</span></span>
+      </a>
+
+      <p class="sidebar-label">WORKSPACE</p>
+      <nav class="navigation">
+        <a class="nav-link active" href="#dashboard">◫ <span>Dashboard</span></a>
+        <a class="nav-link" href="#tasks">✓ <span>My Tasks</span></a>
+        <a class="nav-link" href="#focus">◷ <span>Focus Timer</span></a>
+        <a class="nav-link" href="#notes">▤ <span>Quick Notes</span></a>
+        <a class="nav-link" href="#progress">↗ <span>My Progress</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="mini-orb">✧</div>
+        <h3>Small steps,<br>big results.</h3>
+        <p>Every focused minute counts.</p>
+        <span class="demo-tag">STUDENT DEMO PROJECT</span>
+      </div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="todayDate">YOUR STUDY SPACE</p>
+          <h1>Make today count <span class="wave">✦</span></h1>
+          <p class="muted">A little progress every day adds up.</p>
+        </div>
+        <div class="profile-chip">
+          <span class="avatar">S</span>
+          <div>
+            <strong>Student</strong>
+            <small>Keep growing</small>
+          </div>
+        </div>
+      </header>
+
+      <section class="stats-grid" aria-label="Study statistics">
+        <article class="stat-card glass">
+          <div class="stat-icon blue-icon">✓</div>
+          <p>Tasks completed</p>
+          <h2 id="completedStat">0 <span>/ 0</span></h2>
+          <div class="stat-foot">Your daily progress</div>
+        </article>
+
+        <article class="stat-card glass">
+          <div class="stat-icon purple-icon">◷</div>
+          <p>Focus time today</p>
+          <h2 id="focusStat">0 <span>min</span></h2>
+          <div class="stat-foot">Minutes spent focusing</div>
+        </article>
+
+        <article class="stat-card glass">
+          <div class="stat-icon cyan-icon">✦</div>
+          <p>Daily goal</p>
+          <h2 id="goalStat">0<span>%</span></h2>
+          <div class="stat-foot">Focus goal achievement</div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel glass focus-panel" id="focus">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">TIME TO FOCUS</p>
+              <h2>Focus session</h2>
+            </div>
+            <span class="pill">✦ Stay present</span>
+          </div>
+
+          <div class="timer-area">
+            <div class="timer-ring" id="timerRing">
+              <div class="timer-inner">
+                <span id="timerMode">FOCUS TIME</span>
+                <div id="timerDisplay" role="timer" aria-live="off">25:00</div>
+                <small id="timerHint">One thing at a time</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="timer-presets">
+            <button class="preset active" data-minutes="25" type="button">25 min</button>
+            <button class="preset" data-minutes="15" type="button">15 min</button>
+            <button class="preset" data-minutes="5" type="button">5 min break</button>
+          </div>
+
+          <div class="timer-actions">
+            <button class="button button-primary" id="startTimer" type="button">▶ Start focus</button>
+            <button class="button button-secondary" id="resetTimer" type="button">↻ Reset</button>
+          </div>
+          <p class="timer-message" id="timerMessage" aria-live="polite">Ready when you are.</p>
+        </article>
+
+        <article class="panel glass tasks-panel" id="tasks">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">YOUR CHECKLIST</p>
+              <h2>Today's tasks</h2>
+            </div>
+            <span class="count-badge" id="taskCount">0 tasks</span>
+          </div>
+
+          <form id="taskForm" class="task-form">
+            <label class="sr-only" for="taskInput">New task</label>
+            <input id="taskInput" type="text" maxlength="120"
+              placeholder="What do you need to study?" required>
+            <button class="add-button" type="submit" aria-label="Add task">+</button>
+          </form>
+
+          <div class="task-filters" aria-label="Filter tasks">
+            <button class="filter-btn selected" type="button" data-filter="all">All</button>
+            <button class="filter-btn" type="button" data-filter="active">Pending</button>
+            <button class="filter-btn" type="button" data-filter="done">Completed</button>
+          </div>
+
+          <ul class="task-list" id="taskList"></ul>
+          <p class="empty-state" id="emptyTasks">No tasks here yet. Add your first goal!</p>
+
+          <div class="task-progress">
+            <div class="progress-label">
+              <span>Task progress</span>
+              <strong id="taskProgressLabel">0%</strong>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="taskProgressBar"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel glass notes-panel" id="notes">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">IDEAS & REMINDERS</p>
+              <h2>Quick notes</h2>
+            </div>
+            <span class="notes-icon">✎</span>
+          </div>
+          <textarea id="notesInput" maxlength="5000"
+            placeholder="Write a reminder, a study idea, or something you learned today..."></textarea>
+          <div class="notes-footer">
+            <span id="notesCount">0 / 5000 characters</span>
+            <span id="notesStatus" aria-live="polite">Saved in this browser</span>
+          </div>
+        </article>
+
+        <article class="panel glass progress-panel" id="progress">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">KEEP IT GOING</p>
+              <h2>Daily focus goal</h2>
+            </div>
+            <span class="goal-icon">◎</span>
+          </div>
+          <p class="muted small-copy">Choose how many minutes you want to focus today.</p>
+
+          <div class="goal-setting">
+            <label for="goalInput">Daily goal</label>
+            <div class="goal-input-wrap">
+              <input id="goalInput" type="number" min="5" max="600" step="5" value="60">
+              <span>minutes</span>
+            </div>
+            <button class="button button-secondary save-goal" id="saveGoal" type="button">Save goal</button>
+          </div>
+
+          <div class="goal-visual">
+            <div class="goal-track">
+              <div class="goal-fill" id="goalProgressBar"></div>
+            </div>
+            <div class="progress-label">
+              <span id="goalProgressText">0 of 60 min</span>
+              <strong id="goalPercent">0%</strong>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <span>💡</span>
+            <p><strong>Study tip</strong><br>Put distractions aside and focus on one small task at a time.</p>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <span>✦ StudySpark</span>
+        <span>A student productivity demo — not a live service.</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
